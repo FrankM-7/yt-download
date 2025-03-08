@@ -5,12 +5,13 @@
 
 	ipcRenderer.on('START_PROCESSING', (event, args) => {
 		const { data } = args;
-        // update python libraries
-        let pyshell = new PythonShell(path.join(__dirname, '/../scripts/update_python_libs.py'), {
-            // pythonPath: path.join(__dirname, '/../env/bin/python'), // Mac/Linux
-            pythonPath: path.join(__dirname, '/../env/Scripts/python.exe'), // Windows
-            args: [data]
-        });
+		let pyshell = new PythonShell(path.join(__dirname, '/../scripts/download.py'), {
+			// pythonPath: path.join(__dirname, '/../env/bin/python'), // Mac/Linux
+			pythonPath: path.join(__dirname, '/../env/Scripts/python.exe'), // Windows
+			args: [data],
+			encoding: 'utf8'
+		});
+
 		pyshell.on('message', function (results) {
 			ipcRenderer.send('MESSAGE_FROM_BACKGROUND', { message: results });
 		});

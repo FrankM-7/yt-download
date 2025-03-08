@@ -29,9 +29,8 @@
 			} else {
 				console.log('Python script finished successfully');
 			}
+			ipcRenderer.send('CLOSE_BACKGROUND_WINDOW'); // Signal to close the window
 		});
-
-
 	});
 
 	ipcRenderer.send('BACKGROUND_READY');
