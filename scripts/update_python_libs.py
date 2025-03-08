@@ -13,4 +13,4 @@ def upgrade(package):
 # Example
 if __name__ == '__main__':
     upgrade('youtube-search-python')
-    upgrade('youtube_dl')
+    upgrade('yt-dlp')
