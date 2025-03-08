@@ -1,7 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect } from 'react';
+
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
 
 function App() {
+  useEffect(() => {
+    ipcRenderer.on('MESSAGE_FROM_BACKGROUND_VIA_MAIN', (event, args) => {
+			console.log(args);
+		});
+
+		ipcRenderer.send('START_UPDATE_VIA_MAIN');
+  }, []);
   return (
     <div className="App">
       <header className="App-header">

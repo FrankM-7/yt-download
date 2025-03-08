@@ -2,18 +2,36 @@
   "name": "yt-final",
   "version": "0.1.0",
   "private": true,
+  "main": "public/electron.js",
+  "homepage": "./",
+  "description": "Simple YouTube Downloader",
+  "author": "Frank M",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-scripts": "5.0.1",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron-devtools-installer": "^4.0.0",
+    "electron-load-balancer": "^3.0.0",
+    "python-shell": "^5.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^4.0.3",
+    "wait-on": "^8.0.2",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "electron": "^35.0.0"
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "react-start": "cross-env NODE_OPTIONS=--openssl-legacy-provider BROWSER=NONE react-scripts start",
+    "electron-start": "cross-env DEV=1 electron .",
+    "react-build": "react-scripts build",
+    "start": "concurrently \"npm run react-start\" \"wait-on http://localhost:3000/ && npm run electron-start\"",
+    "electron-build-windows": "electron-builder --win -c.extraMetadata.main=build/electron.js",
+    "build-windows": "cross-env NODE_OPTIONS=--openssl-legacy-provider npm run react-build && npm run electron-build-windows",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -35,5 +53,38 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "build": {
+    "appId": "Factorial Calculator",
+    "productName": "F-Cal",
+    "copyright": "Copyright © 2024-2025 Frank M",
+    "asar": false,
+    "snap": {
+      "confinement": "classic"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "legalTrademarks": "Copyright © 2024-2025 Frank M",
+      "signtoolOptions": {
+        "signingHashAlgorithms" : []
+      }
+    },
+    "nsis": {
+      "oneClick": true
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "utils/**/*",
+      "scripts/**/*",
+      "background_tasks/**/*",
+      "env/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "extends": null
   }
 }
