@@ -1,11 +1,11 @@
 import sys
 from youtubesearchpython import VideosSearch
 import io
+import json
+
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-query = "sys.argv[1]"
-
-print("Query: ", query)
+query = sys.argv[1]
 
 output_json = {}
 output_json["results"] = []
@@ -27,5 +27,6 @@ for result in results:
 	newResult["duration"] = result["duration"]
 
 	output_json["results"].append(newResult)
-	
-print(output_json)
+
+type = "SEARCH_RESULT"
+print(json.dumps({"type": type,  "data": output_json}))
